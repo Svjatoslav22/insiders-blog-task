@@ -1,13 +1,12 @@
 import { HttpError } from "../utils/HttpError.js";
-import type { RegisterInput } from "../types/auth.types.js";
+import type { LoginInput, RegisterInput } from "../types/auth.types.js";
+import { isRecord } from "../utils/typeGuards.js";
+
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MIN_PASSWORD_LENGTH = 6;
 const MAX_NAME_LENGTH = 50;
 
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === "object" && value !== null && !Array.isArray(value);
-}
 
 export function validateRegisterBody(body: unknown): RegisterInput {
   if (!isRecord(body)) {
@@ -39,4 +38,21 @@ export function validateRegisterBody(body: unknown): RegisterInput {
     password,
     name: trimmedName.length > 0 ? trimmedName : null,
   };
+}
+export function validateLoginBody(body: unknown): LoginInput {
+  if (!isRecord(body)) {
+    throw new HttpError(400, "Request body must be a JSON object");
+  }
+
+  const { email, password } = body;
+
+  if (typeof email !== "string" || email.trim().length === 0) {
+    throw new HttpError(400, "Email is required");
+  }
+
+  if (typeof password !== "string" || password.length === 0) {
+    throw new HttpError(400, "Password is required");
+  }
+
+  return { email: email.trim().toLowerCase(), password };
 }
