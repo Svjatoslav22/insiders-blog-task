@@ -1,28 +1,32 @@
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { usePost } from "../../../hooks/usePost";
 
-export default function PostDetailPage(): React.JSX.Element {
+function PostDetailSkeleton(): React.JSX.Element {
+  return (
+    <div className="max-w-3xl mx-auto py-12 animate-pulse space-y-6">
+      <div className="h-5 w-32 bg-gray-200 rounded" />
+      <div className="h-10 w-3/4 bg-gray-200 rounded" />
+      <div className="h-4 w-48 bg-gray-200 rounded" />
+      <div className="space-y-3 pt-6 border-t border-gray-100">
+        <div className="h-4 bg-gray-200 rounded w-full" />
+        <div className="h-4 bg-gray-200 rounded w-5/6" />
+        <div className="h-4 bg-gray-200 rounded w-4/6" />
+      </div>
+    </div>
+  );
+}
+
+function PostDetailContent(): React.JSX.Element {
   const params = useParams();
   const id = typeof params.id === "string" ? params.id : "";
   const { post, isLoading, error } = usePost(id);
 
   if (isLoading) {
-    return (
-      <div className="max-w-3xl mx-auto py-12 animate-pulse space-y-6">
-        <div className="h-5 w-32 bg-gray-200 rounded" />
-        <div className="h-10 w-3/4 bg-gray-200 rounded" />
-        <div className="h-4 w-48 bg-gray-200 rounded" />
-        <div className="space-y-3 pt-6 border-t border-gray-100">
-          <div className="h-4 bg-gray-200 rounded w-full" />
-          <div className="h-4 bg-gray-200 rounded w-5/6" />
-          <div className="h-4 bg-gray-200 rounded w-4/6" />
-        </div>
-      </div>
-    );
+    return <PostDetailSkeleton />;
   }
 
   if (error || !post) {
@@ -90,5 +94,13 @@ export default function PostDetailPage(): React.JSX.Element {
         {post.content}
       </div>
     </article>
+  );
+}
+
+export default function PostDetailPage(): React.JSX.Element {
+  return (
+    <Suspense fallback={<PostDetailSkeleton />}>
+      <PostDetailContent />
+    </Suspense>
   );
 }
