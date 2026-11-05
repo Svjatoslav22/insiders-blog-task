@@ -11,7 +11,7 @@ async function main(): Promise<void> {
   });
 
   if (existingAdmin) {
-    console.log(`ℹ️ Admin already exists: ${adminEmail}`);
+    console.log(`Admin already exists: ${adminEmail}`);
     return;
   }
 

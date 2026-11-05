@@ -1,56 +1,80 @@
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuth } from "../context/AuthContext";
 
-export function Header(): React.JSX.Element {
-  const { user, logout } = useAuth();
+function NavLinks(): React.JSX.Element {
   const pathname = usePathname();
+  const { user } = useAuth();
 
   const isHome = pathname === "/";
   const isAdmin = pathname === "/admin";
+
+  return (
+    <nav className="hidden md:flex space-x-8">
+      <Link
+        href="/"
+        className={`font-medium px-1 py-2 border-b-2 transition-colors ${
+          isHome
+            ? "text-indigo-600 border-indigo-600"
+            : "text-gray-500 border-transparent hover:text-indigo-600"
+        }`}
+      >
+        Головна
+      </Link>
+
+      {user?.role === "ADMIN" && (
+        <Link
+          href="/admin"
+          className={`font-medium px-1 py-2 border-b-2 transition-colors ${
+            isAdmin
+              ? "text-indigo-600 border-indigo-600"
+              : "text-gray-500 border-transparent hover:text-indigo-600"
+          }`}
+        >
+          Адмін-панель
+        </Link>
+      )}
+    </nav>
+  );
+}
+
+function NavLinksFallback(): React.JSX.Element {
+  return (
+    <nav className="hidden md:flex space-x-8">
+      <Link
+        href="/"
+        className="font-medium px-1 py-2 text-indigo-600 border-b-2 border-indigo-600"
+      >
+        Головна
+      </Link>
+    </nav>
+  );
+}
+
+export function Header(): React.JSX.Element {
+  const { user, logout } = useAuth();
 
   return (
     <header className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           {/* Градієнтний логотип */}
-                   {/* Градієнтний логотип */}
           <Link
             href="/"
             className="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 hover:opacity-90 transition-opacity"
           >
-            insidersBlog<span className="text-indigo-600"></span>
+            insidersBlog<span className="text-indigo-600">.</span>
           </Link>
 
-          <nav className="hidden md:flex space-x-8">
-            <Link
-              href="/"
-              className={`font-medium px-1 py-2 border-b-2 transition-colors ${
-                isHome
-                  ? "text-indigo-600 border-indigo-600"
-                  : "text-gray-500 border-transparent hover:text-indigo-600"
-              }`}
-            >
-              Головна
-            </Link>
+          {/* Навігація огорнута в Suspense для підтримки usePathname в Next.js 16 */}
+          <Suspense fallback={<NavLinksFallback />}>
+            <NavLinks />
+          </Suspense>
 
-            {user?.role === "ADMIN" && (
-              <Link
-                href="/admin"
-                className={`font-medium px-1 py-2 border-b-2 transition-colors ${
-                  isAdmin
-                    ? "text-indigo-600 border-indigo-600"
-                    : "text-gray-500 border-transparent hover:text-indigo-600"
-                }`}
-              >
-                Адмін-панель
-              </Link>
-            )}
-          </nav>
-
+          {/* Авторизація */}
           <div className="flex items-center space-x-4">
             {user ? (
               <div className="flex items-center space-x-3">
