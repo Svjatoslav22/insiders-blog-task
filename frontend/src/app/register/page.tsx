@@ -39,17 +39,23 @@ export default function RegisterPage(): React.JSX.Element {
   };
 
   return (
-    <div className="max-w-md mx-auto py-12">
-      <div className="bg-white rounded-2xl p-8 border border-gray-100 shadow-sm">
+    <div className="max-w-md mx-auto px-4 py-16">
+      <div className="bg-white rounded-2xl p-8 border border-gray-100 shadow-md">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">Створення акаунту</h1>
+          <Link
+            href="/"
+            className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600"
+          >
+            insidersBlog<span className="text-indigo-600">.</span>
+          </Link>
+          <h1 className="text-2xl font-bold text-gray-900 mt-4">Створення акаунту</h1>
           <p className="text-sm text-gray-500 mt-1">
             Приєднуйтесь до блог-платформи вже зараз
           </p>
         </div>
 
         {error && (
-          <div className="mb-6 p-3 rounded-lg bg-red-50 border border-red-100 text-sm text-red-600 text-center">
+          <div className="mb-6 p-3 rounded-xl bg-red-50 border border-red-100 text-sm text-red-600 text-center">
             {error}
           </div>
         )}
@@ -58,7 +64,7 @@ export default function RegisterPage(): React.JSX.Element {
           <div>
             <label
               htmlFor="name"
-              className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1"
+              className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2"
             >
               Ваше імʼя (необовʼязково)
             </label>
@@ -70,14 +76,14 @@ export default function RegisterPage(): React.JSX.Element {
                 setName(e.target.value)
               }
               placeholder="Тарас Шевченко"
-              className="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
             />
           </div>
 
           <div>
             <label
               htmlFor="email"
-              className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1"
+              className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2"
             >
               Email *
             </label>
@@ -90,14 +96,14 @@ export default function RegisterPage(): React.JSX.Element {
                 setEmail(e.target.value)
               }
               placeholder="example@mail.com"
-              className="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
             />
           </div>
 
           <div>
             <label
               htmlFor="password"
-              className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1"
+              className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2"
             >
               Пароль *
             </label>
@@ -110,20 +116,20 @@ export default function RegisterPage(): React.JSX.Element {
                 setPassword(e.target.value)
               }
               placeholder="Мінімум 6 символів"
-              className="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
             />
           </div>
 
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-2.5 px-4 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm shadow-sm transition disabled:opacity-50 disabled:cursor-not-allowed mt-2"
+            className="w-full py-3 px-5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm shadow-md hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-2"
           >
             {isSubmitting ? "Реєстрація..." : "Зареєструватися"}
           </button>
         </form>
 
-        <div className="text-center mt-6 pt-6 border-t border-gray-50 text-sm text-gray-500">
+        <div className="text-center mt-6 pt-6 border-t border-gray-100 text-sm text-gray-500">
           Вже маєте акаунт?{" "}
           <Link
             href="/login"

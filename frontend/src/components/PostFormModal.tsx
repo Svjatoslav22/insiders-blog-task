@@ -62,34 +62,36 @@ export function PostFormModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-200">
-      <div className="bg-white rounded-2xl w-full max-w-xl p-6 shadow-xl border border-gray-100">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/50 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="bg-white rounded-2xl w-full max-w-xl p-6 sm:p-8 shadow-2xl border border-gray-100">
         <div className="flex items-center justify-between pb-4 border-b border-gray-100">
-          <h2 className="text-xl font-bold text-gray-900">
-            {postToEdit ? "Редагувати пост" : "Створити новий пост"}
+          <h2 className="text-xl font-extrabold text-gray-900">
+            {postToEdit ? "Редагувати публікацію" : "Нова публікація"}
           </h2>
           <button
             type="button"
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 text-xl font-bold p-1 leading-none"
+            className="text-gray-400 hover:text-gray-600 rounded-lg p-1 transition-colors"
           >
-            ✕
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
           </button>
         </div>
 
         {error && (
-          <div className="mt-4 p-3 rounded-lg bg-red-50 text-red-600 text-sm border border-red-100">
+          <div className="mt-4 p-3 rounded-xl bg-red-50 text-red-600 text-sm border border-red-100">
             {error}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+        <form onSubmit={handleSubmit} className="space-y-5 mt-6">
           <div>
             <label
               htmlFor="post-title"
-              className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1"
+              className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2"
             >
-              Заголовок *
+              Заголовок публікації
             </label>
             <input
               id="post-title"
@@ -99,17 +101,17 @@ export function PostFormModal({
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setTitle(e.target.value)
               }
-              placeholder="Введіть заголовок статті..."
-              className="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+              placeholder="Наприклад: Як налаштувати Next.js та Tailwind"
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
             />
           </div>
 
           <div>
             <label
               htmlFor="post-content"
-              className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1"
+              className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2"
             >
-              Зміст публікації *
+              Текст статті
             </label>
             <textarea
               id="post-content"
@@ -119,8 +121,8 @@ export function PostFormModal({
               onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
                 setContent(e.target.value)
               }
-              placeholder="Напишіть текст статті тут..."
-              className="w-full px-4 py-2.5 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition resize-y"
+              placeholder="Поділіться вашими думками..."
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition resize-y"
             />
           </div>
 
@@ -129,14 +131,14 @@ export function PostFormModal({
               type="button"
               onClick={onClose}
               disabled={isSubmitting}
-              className="px-4 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-100 transition"
+              className="px-5 py-2.5 rounded-xl text-sm font-medium text-gray-600 hover:bg-gray-100 transition-colors"
             >
               Скасувати
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-5 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm shadow-sm transition disabled:opacity-50"
+              className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm shadow-md hover:shadow-lg transition-all disabled:opacity-50"
             >
               {isSubmitting
                 ? "Збереження..."
