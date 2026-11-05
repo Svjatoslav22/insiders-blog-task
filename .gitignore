@@ -14,6 +14,8 @@ dist/
 .env.test.local
 .env.production.local
 *.env
+.env
+backend/src/generated/
 
 # Логи
 npm-debug.log*
